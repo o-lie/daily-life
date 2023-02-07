@@ -1,0 +1,77 @@
+@import "@/styles/_variables.scss";
+
+.sidebar {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+
+	&__top {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	&__logo {
+		height: 3rem;
+	}
+
+	&__arrow {
+		height: 2rem;
+		width: 2rem;
+		position: absolute;
+		right: -1rem;
+		top: 3rem;
+		background-color: white;
+		border-radius: 2rem;
+		cursor: pointer;
+		transition: transform .3s;
+		box-shadow: rgba(149, 157, 165, 0.2) 0 8px 24px;
+
+		//&:hover {
+		//	transform: scale(1.1) rotate(0deg);
+		//}
+
+		&--left {
+			transform: rotate(-180deg);
+
+			//&:hover {
+			//	transform: scale(1.1) rotate(-180deg);
+			//}
+		}
+
+		& > svg {
+			position: absolute;
+			left: 0.5rem;
+			top: 0.5rem;
+			fill: $purple;
+			height: 1rem;
+		}
+	}
+
+	&__inner {
+		height: 100%;
+		display: flex;
+		align-items: center;
+		padding: 5rem 1.5rem;
+	}
+
+	&__navigation {
+		height: 100%;
+		background-color: $purple;
+		width: 70px;
+		border-radius: 1.5rem;
+		transition: width .5s;
+		position: relative;
+
+		&--open {
+			width: 200px;
+		}
+	}
+
+	&__items {
+		margin-top: 8rem;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+}
