@@ -1,8 +1,17 @@
 import Head from "next/head";
 import Layout from "@/components/Layout";
 import Header from "@/components/Header";
+import TodosForTodayCard from "@/components/TodosForTodayCard";
+import { getTodos } from "@/lib/notion";
+import { Todo } from "@/types/types";
+import Card from "@/components/Card";
+import { Chip } from "@mui/material";
 
-export default function Home() {
+export default function Home(todos: { todos: Todo[] }) {
+	const allTodos = todos.todos.map((todo) => todo);
+	const today = new Date();
+	console.log(today);
+	console.log(allTodos);
 	return (
 		<Layout>
 			<Head>
@@ -12,6 +21,40 @@ export default function Home() {
 				<link rel="icon" href="/favicon.ico"/>
 			</Head>
 			<Header title={"Dzień dobry, Oliwka!"}/>
+
+			{/*<TodosForTodayCard todos={allTodos}/>*/}
+
+			<Card>
+				<h3>Todos na dziś</h3>
+				<div>
+					{
+						allTodos.filter(todo => new Date(todo.date).toDateString() === today.toDateString())
+							 .map(todo =>
+								 (
+									 <div>
+										 <Chip
+											 variant="filled"
+											 size="small"
+											 label={todo.status}
+										 />
+										 {todo.title}
+									 </div>
+								 )
+							 )
+					}
+				</div>
+			</Card>
 		</Layout>
 	);
 }
+
+export const getStaticProps = async () => {
+	const data = await getTodos();
+
+	return {
+		props: {
+			todos: data
+		},
+		revalidate: 60
+	};
+};

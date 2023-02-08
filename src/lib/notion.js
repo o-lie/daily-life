@@ -12,7 +12,7 @@ export const getTodos = async () => {
     );
 
     const allTodos = todos.results;
-
+    console.log(allTodos[0].properties.Date);
     return allTodos.map((todo) => {
         return getTodoMetaData(todo);
     });
@@ -21,7 +21,25 @@ export const getTodos = async () => {
 const getTodoMetaData = (todo) => {
     return {
         id: todo.id,
-        title: todo.properties.Name.title[ 0 ].plain_text,
-        status: todo.properties.Status.status.name
+        title: todo.properties.Name.title[ 0 ].plain_text ?? "",
+        status: todo.properties.Status.status.name,
+        date: todo.properties.Date.date?.start ?? ""
     };
+};
+
+function getToday (datestring) {
+    const months = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    let date = new Date();
+
+    if (datestring) {
+        date = new Date(datestring);
+    }
+
+    const day = date.getDate();
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+    let today = `${month} ${day}, ${year}`;
+
+    return today;
 };

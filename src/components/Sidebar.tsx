@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import styles from "@/styles/components/sidebar.module.scss";
+import Image from "next/image";
 
 const Sidebar = () => {
 	const [ isOpen, toggleIsOpen ] = useState<boolean>(false);
@@ -19,8 +20,12 @@ const Sidebar = () => {
 						{/*	logo*/}
 						{/*</div>*/}
 						<div className={ styles.sidebar__items }>
-								<Link href={"/"}>Home</Link>
-								<Link href={"/todos/"}>Todos</Link>
+								<Link className={ styles.sidebar__item } href={"/"}>
+									Home
+								</Link>
+								<Link className={ styles.sidebar__item } href={"/todos/"}>
+									Todos
+								</Link>
 						</div>
 					</div>
 				</div>

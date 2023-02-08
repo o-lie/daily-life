@@ -1,0 +1,54 @@
+@import "../../variables";
+
+.todos {
+	overflow: hidden auto;
+	width: 100%;
+	height: 100%;
+	box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+
+	&__inner {
+		border-radius: 8px;
+		background-color: $baby-powder;
+	}
+
+	&__list-wrapper {
+		padding: 1rem;
+		&:not(&:last-of-type) {
+			border-bottom: 1px solid #dedede;
+		}
+	}
+
+	&__list-top-bar {
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding-bottom: 10px;
+	}
+
+	&__list {
+		border-radius: 8px;
+		overflow: hidden;
+
+		&--grey {
+			background-color: $electric-blue;
+		}
+
+		&--yellow {
+			background-color: $cream;
+		}
+
+		&--green {
+			background-color: $tea-green;
+		}
+	}
+
+	&__list-item {
+		&:not(&:last-of-type) {
+			border-bottom: 1px solid #dedede;
+		}
+
+		padding: 10px;
+	}
+}
