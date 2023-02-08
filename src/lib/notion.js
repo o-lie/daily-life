@@ -12,7 +12,7 @@ export const getTodos = async () => {
     );
 
     const allTodos = todos.results;
-    console.log(allTodos[0].properties.Date);
+
     return allTodos.map((todo) => {
         return getTodoMetaData(todo);
     });

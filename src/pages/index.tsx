@@ -10,8 +10,7 @@ import { Chip } from "@mui/material";
 export default function Home(todos: { todos: Todo[] }) {
 	const allTodos = todos.todos.map((todo) => todo);
 	const today = new Date();
-	console.log(today);
-	console.log(allTodos);
+
 	return (
 		<Layout>
 			<Head>

@@ -11,6 +11,8 @@ import Image from "next/image";
 
 export default function TodosList(todos: { todos: Todo[] }) {
 	const allTodos = todos.todos.map((todo) => todo);
+
+	const [ isLoading, toggleIsLoading ] = useState(true);
 	const [ statusState, setStatusState ] = useState(Object.values(todosStatusDictionary));
 
 	return (
@@ -21,7 +23,7 @@ export default function TodosList(todos: { todos: Todo[] }) {
 				<div className={ styles.todos__inner }>
 					{
 						statusState.map(stateItem => {
-							console.log(stateItem.color);
+
 							return (
 								<div className={ styles[ "todos__list-wrapper" ] }>
 									<div
@@ -66,6 +68,7 @@ export default function TodosList(todos: { todos: Todo[] }) {
 }
 
 export const getStaticProps = async () => {
+
 	const data = await getTodos();
 
 	return {
