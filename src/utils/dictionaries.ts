@@ -5,6 +5,7 @@ export const tasksStatusDictionary: EnumDictionary<Status, StatusItem> = {
 	[ Status.TODO ]:
 		{
 			name: Status.TODO,
+			isDone: false,
 			isOpen: false,
 			iconSrc: "/images/todo.svg",
 			color: StatusColor.TODO
@@ -12,6 +13,7 @@ export const tasksStatusDictionary: EnumDictionary<Status, StatusItem> = {
 	[ Status.DONE ]:
 		{
 			name: Status.DONE,
+			isDone: true,
 			isOpen: false,
 			iconSrc: "/images/done.svg",
 			color: StatusColor.DONE

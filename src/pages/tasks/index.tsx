@@ -1,9 +1,9 @@
 import Head from "next/head";
 import Layout from "@/components/Layout";
-import { Status, Task } from "@/types/types";
+import { Task } from "@/types/types";
 import Header from "@/components/Header";
 import styles from "@/styles/pages/tasks/tasks.module.scss";
-import { Box, Button, Collapse, Divider, FormControl, IconButton, InputLabel, ListItem, ListItemText, MenuItem, Modal, Select, Snackbar, Stack, TextField, Tooltip, Typography } from "@mui/material";
+import { Box, Button, Collapse, Divider, FormControl, IconButton, ListItem, ListItemText, Modal, Snackbar, Stack, TextField, Tooltip, Typography } from "@mui/material";
 import { useState } from "react";
 import { tasksStatusDictionary } from "@/utils/dictionaries";
 import Image from "next/image";
@@ -22,7 +22,7 @@ type Props = {
 
 const initialState = {
 	title: "",
-	status: Status.TODO,
+	done: false,
 	date: null
 }
 
@@ -106,28 +106,6 @@ export default function TodosList(props: Props) {
 								/>
 							</FormControl>
 							<FormControl fullWidth>
-								<InputLabel id="demo-simple-select-label">Status</InputLabel>
-								<Select
-									labelId="demo-simple-select-label"
-									id="demo-simple-select"
-									label="Status"
-									value={ newTask.status }
-									defaultValue={ Status.TODO }
-									onChange={ e => setNewTask(prevState => {
-										return {
-											...prevState,
-											status: e.target.value
-										};
-									}) }
-								>
-									{
-										statusState.map(status => {
-											return <MenuItem value={ status.name }>{ status.name }</MenuItem>;
-										})
-									}
-								</Select>
-							</FormControl>
-							<FormControl fullWidth>
 								<LocalizationProvider dateAdapter={ AdapterDayjs }>
 									<DatePicker
 										onChange={ newDate => setNewTask(prevState => {
@@ -158,7 +136,7 @@ export default function TodosList(props: Props) {
 				<div className={ styles.tasks__inner }>
 					{
 						statusState.map(stateItem => {
-							const currentTasks = tasks.filter(task => task.status === stateItem.name);
+							const currentTasks = tasks.filter(task => task.done === stateItem.isDone);
 
 							return (
 								<div key={ stateItem.name } className={ styles[ "tasks__list-wrapper" ] }>

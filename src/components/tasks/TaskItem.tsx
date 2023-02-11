@@ -1,10 +1,9 @@
 import styles from "@/styles/components/tasks/TaskItem.module.scss";
 import { Task } from "@/types/types";
-import { IconButton, ListItem, ListItemText, Snackbar, Tooltip } from "@mui/material";
+import { Checkbox, FormControlLabel, FormGroup, IconButton, ListItem, ListItemText, Snackbar, Tooltip } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { convertStringToDate } from "@/utils/constants";
-import ArchiveIcon from "@mui/icons-material/Archive";
 import axios from "axios";
 import { useState } from "react";
 
@@ -60,13 +59,6 @@ const TaskItem = (props: Props) => {
 								<EditIcon/>
 							</IconButton>
 						</Tooltip>
-						<Tooltip title="Zarchiwizuj">
-							<IconButton
-								//todo Add archive option
-								onClick={ () => console.log("Zarchiwizuj") }>
-								<ArchiveIcon/>
-							</IconButton>
-						</Tooltip>
 						<Tooltip title="Usuń">
 							<IconButton
 								onClick={ () => handleDeleteTask(task.id) }
@@ -78,6 +70,9 @@ const TaskItem = (props: Props) => {
 
 				}
 			>
+				<FormGroup>
+					<FormControlLabel control={<Checkbox defaultChecked />} label="" />
+				</FormGroup>
 				<ListItemText
 					primary={ task?.title }
 					secondary={ task.date ? convertStringToDate(task.date as string) : "Brak daty" }

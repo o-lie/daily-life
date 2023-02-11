@@ -18,11 +18,11 @@ export const getTasks = async () => {
 
 export const addTask = async (task) => {
     if(task.date == null) {
-        const docRef = await addDoc(tasksCollectionRef, {title: task.title, status: task.status})
+        const docRef = await addDoc(tasksCollectionRef, {title: task.title, done: task.done})
         console.log(`task with id ${docRef.id} was created`)
     }
     else {
-        const docRef = await addDoc(tasksCollectionRef, {title: task.title, status: task.status, date: convertStringToTimestamp(task.date)})
+        const docRef = await addDoc(tasksCollectionRef, {title: task.title, done: task.done, date: convertStringToTimestamp(task.date)})
         console.log(`task with id ${docRef.id} was created`)
     }
 }
@@ -38,7 +38,7 @@ const getTaskMeta = (task) => {
         return {
             id: task.id,
             title: task.data().title,
-            status: task.data().status,
+            done: task.data().done,
             date: convertDateToString(task.data().date.toDate())
         }
     }
@@ -46,7 +46,7 @@ const getTaskMeta = (task) => {
         return {
             id: task.id,
             title: task.data().title,
-            status: task.data().status
+            done: task.data().done
         }
     }
 }

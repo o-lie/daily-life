@@ -7,7 +7,7 @@ export type EnumDictionary<T extends string | symbol | number, U> = {
 export type Task = {
 	id?: string,
 	title: string,
-	status: Status,
+	done: boolean,
 	date?: string | Dayjs | null
 }
 
@@ -36,6 +36,7 @@ export enum StatusColor {
 
 export type StatusItem = {
 	name: string,
+	isDone: boolean,
 	isOpen: boolean,
 	iconSrc: string,
 	color: StatusColor
