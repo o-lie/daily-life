@@ -1,15 +1,20 @@
 import Head from "next/head";
 import Layout from "@/components/Layout";
 import Header from "@/components/Header";
-import TodosForTodayCard from "@/components/TodosForTodayCard";
-import { getTodos } from "@/lib/notion";
-import { Todo } from "@/types/types";
-import Card from "@/components/Card";
+import { Task } from "@/types/types";
+import { getTasks } from "@/lib/tasks";
 import { Chip } from "@mui/material";
+import dayjs from "dayjs";
+import isToday from "dayjs/plugin/isToday";
+import Card from "@/components/Card";
+type Props = {
+	tasks: Task[]
+}
 
-export default function Home(todos: { todos: Todo[] }) {
-	const allTodos = todos.todos.map((todo) => todo);
-	const today = new Date();
+
+dayjs.extend(isToday);
+
+export default function Home(props: Props) {
 
 	return (
 		<Layout>
@@ -21,22 +26,21 @@ export default function Home(todos: { todos: Todo[] }) {
 			</Head>
 			<Header title={"Dzień dobry, Oliwka!"}/>
 
-			{/*<TodosForTodayCard todos={allTodos}/>*/}
-
 			<Card>
-				<h3>Todos na dziś</h3>
+				<h3>Zadania na dziś</h3>
 				<div>
 					{
-						allTodos.filter(todo => new Date(todo.date).toDateString() === today.toDateString())
-							 .map(todo =>
+						props.tasks
+							 .filter(task => task.date != null && dayjs(task.date).isToday())
+							 .map(task =>
 								 (
 									 <div>
 										 <Chip
 											 variant="filled"
 											 size="small"
-											 label={todo.status}
+											 label={task.status}
 										 />
-										 {todo.title}
+										 {task.title}
 									 </div>
 								 )
 							 )
@@ -47,13 +51,12 @@ export default function Home(todos: { todos: Todo[] }) {
 	);
 }
 
-export const getStaticProps = async () => {
-	const data = await getTodos();
+export const getServerSideProps = async () => {
+	const tasks = await getTasks();
 
 	return {
 		props: {
-			todos: data
-		},
-		revalidate: 60
+			tasks: tasks
+		}
 	};
 };

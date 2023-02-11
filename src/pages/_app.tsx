@@ -5,8 +5,8 @@ import { projectTheme } from "@/utils/constants";
 
 export default function App({ Component, pageProps }: AppProps) {
 	return (
-		<ThemeProvider theme={projectTheme}>
-			<Component { ...pageProps } />
-		</ThemeProvider>
+			<ThemeProvider theme={projectTheme}>
+				<Component { ...pageProps } />
+			</ThemeProvider>
 		);
 }

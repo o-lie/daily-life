@@ -23,8 +23,8 @@ const Sidebar = () => {
 								<Link className={ styles.sidebar__item } href={"/"}>
 									Home
 								</Link>
-								<Link className={ styles.sidebar__item } href={"/todos/"}>
-									Todos
+								<Link className={ styles.sidebar__item } href={"/tasks/"}>
+									Lista zadań
 								</Link>
 						</div>
 					</div>
