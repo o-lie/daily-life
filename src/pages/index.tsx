@@ -3,7 +3,6 @@ import Layout from "@/components/Layout";
 import Header from "@/components/Header";
 import { Task } from "@/types/types";
 import { getTasks } from "@/lib/tasks";
-import { Chip } from "@mui/material";
 import dayjs from "dayjs";
 import isToday from "dayjs/plugin/isToday";
 import Card from "@/components/Card";
@@ -35,11 +34,6 @@ export default function Home(props: Props) {
 							 .map(task =>
 								 (
 									 <div>
-										 <Chip
-											 variant="filled"
-											 size="small"
-											 label={task.status}
-										 />
 										 {task.title}
 									 </div>
 								 )
