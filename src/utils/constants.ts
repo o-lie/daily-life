@@ -38,7 +38,10 @@ export const modalContentStyle = {
 	width: 400,
 	bgcolor: "background.paper",
 	borderRadius: "12px",
-	p: 4
+	p: 4,
+	display: "flex",
+	flexDirection: "column",
+	gap: "1rem"
 }
 
 export const convertDateToString = (dateAsDate: Date) => {

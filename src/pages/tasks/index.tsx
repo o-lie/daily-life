@@ -4,7 +4,7 @@ import { Task } from "@/types/types";
 import Header from "@/components/Header";
 import styles from "@/styles/pages/tasks/tasks.module.scss";
 import { Box, Button, Collapse, Divider, FormControl, IconButton, ListItem, ListItemText, Modal, Snackbar, Stack, TextField, Tooltip, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { tasksStatusDictionary } from "@/utils/dictionaries";
 import Image from "next/image";
 import TaskItem from "@/components/tasks/TaskItem";
@@ -15,6 +15,9 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { Dayjs } from "dayjs";
 import axios from "axios";
+import MyModal from "@/components/MyModal";
+import { useRouter } from "next/router";
+import { TransitionGroup } from "react-transition-group";
 
 type Props = {
 	tasks: Task[]
@@ -24,13 +27,15 @@ const initialState = {
 	title: "",
 	done: false,
 	date: null
-}
+};
 
 export default function TodosList(props: Props) {
 
 	const {
 		tasks: tasks
 	} = props;
+
+	const router = useRouter();
 
 	const [ statusState, setStatusState ] = useState(Object.values(tasksStatusDictionary));
 	const [ isModalOpen, toggleModalOpen ] = useState(false);
@@ -39,8 +44,12 @@ export default function TodosList(props: Props) {
 		message: "",
 		status: 100
 	});
-
 	const [ newTask, setNewTask ] = useState<Task>(initialState);
+
+	const onClose = () => {
+		toggleModalOpen(false);
+		setNewTask(initialState);
+	};
 
 	const onSubmit = () => {
 		axios.post("/api/tasks", newTask).then((response) => {
@@ -48,14 +57,62 @@ export default function TodosList(props: Props) {
 				return {
 					...prevState,
 					isOpen: true,
-					message: response.data,
+					message: response.data.message,
 					status: response.status
-				}
-			})
-			console.log(response);
+				};
+			});
+			router.replace(router.asPath);
 			toggleModalOpen(false);
 			setNewTask(initialState);
 		});
+	};
+
+	const AddTaskModal = () => {
+		return (
+			<Stack spacing={ 2 }>
+				<FormControl fullWidth>
+					<TextField
+						id="taskt-title"
+						label="Nazwa"
+						variant="outlined"
+						value={ newTask?.title }
+						onChange={ e => setNewTask(prevState => {
+							return {
+								...prevState,
+								title: e.target.value
+							};
+						}) }
+						required
+					/>
+				</FormControl>
+				<FormControl fullWidth>
+					<LocalizationProvider dateAdapter={ AdapterDayjs }>
+						<DatePicker
+							onChange={ newDate => setNewTask(prevState => {
+								return {
+									...prevState,
+									date: convertDayjsToString(newDate as Dayjs)
+								};
+							}) }
+							renderInput={ (params) => <TextField { ...params }/> }
+							value={ newTask.date }
+							label={ "Data" }
+						/>
+					</LocalizationProvider>
+				</FormControl>
+				<Stack spacing={ 2 } direction="row">
+					<Button
+						type="submit"
+						variant="contained"
+						onClick={ onSubmit }
+						disabled={ newTask.title === "" }
+					>
+						Zapisz
+					</Button>
+					<Button color="secondary" variant={ "outlined" } onClick={ () => onClose() }>Anuluj</Button>
+				</Stack>
+			</Stack>
+		);
 	};
 
 	// @ts-ignore
@@ -63,6 +120,7 @@ export default function TodosList(props: Props) {
 		<Layout>
 			<Head><title>Tasks</title></Head>
 			<Header title={ "Lista zadań" }/>
+			<MyModal isOpen={ isModalOpen } title={ "Dodaj nowe zadanie" } handleClose={ () => toggleModalOpen(false) } children={ AddTaskModal() }/>
 			<div className={ styles.tasks }>
 				<Tooltip title={ "Dodaj" }>
 					<IconButton
@@ -82,57 +140,6 @@ export default function TodosList(props: Props) {
 					}) }
 					message={ snackbarState.message }
 				/>
-				<Modal
-					open={ isModalOpen }
-					onClose={ () => toggleModalOpen(false) }
-				>
-					<Box sx={ modalContentStyle }>
-						<Typography variant="h5">Dodaj nowe zadanie</Typography>
-						<Divider/>
-						<Stack spacing={ 2 }>
-							<FormControl fullWidth>
-								<TextField
-									id="taskt-title"
-									label="Nazwa"
-									variant="outlined"
-									value={ newTask?.title }
-									onChange={ e => setNewTask(prevState => {
-										return {
-											...prevState,
-											title: e.target.value
-										};
-									}) }
-									required
-								/>
-							</FormControl>
-							<FormControl fullWidth>
-								<LocalizationProvider dateAdapter={ AdapterDayjs }>
-									<DatePicker
-										onChange={ newDate => setNewTask(prevState => {
-											return {
-												...prevState,
-												date: convertDayjsToString(newDate as Dayjs)
-											};
-										}) }
-										renderInput={ (params) => <TextField { ...params }/> }
-										value={ newTask.date }
-										label={ "Data" }
-									/>
-								</LocalizationProvider>
-							</FormControl>
-							<Stack spacing={ 2 } direction="row">
-								<Button
-									type="submit"
-									variant="contained"
-									onClick={ onSubmit }
-								>Zapisz</Button>
-								<Button color="secondary" variant={ "outlined" } onClick={ () => toggleModalOpen(false) }>Anuluj</Button>
-							</Stack>
-						</Stack>
-
-
-					</Box>
-				</Modal>
 				<div className={ styles.tasks__inner }>
 					{
 						statusState.map(stateItem => {

@@ -1,4 +1,4 @@
-import { collection, getDocs, deleteDoc, doc, addDoc } from "firebase/firestore";
+import { collection, getDocs, deleteDoc, doc, addDoc, setDoc } from "firebase/firestore";
 import { db } from "firebaseConfig";
 import { convertDateToString, convertStringToTimestamp } from "@/utils/constants";
 
@@ -26,6 +26,24 @@ export const addTask = async (task) => {
     else {
         const docRef = await addDoc(tasksCollectionRef, {title: task.title, done: task.done, date: convertStringToTimestamp(task.date)})
         console.log(`task with id ${docRef.id} was created`)
+    }
+}
+
+export const updateTask = async (task) => {
+    const docRef = doc(db, "tasks", task.id);
+
+    if(task.date == null) {
+        await setDoc(docRef, {
+            title: task.title,
+            done: task.done
+        });
+    }
+    else {
+        await setDoc(docRef, {
+            title: task.title,
+            done: task.done,
+            date: convertStringToTimestamp(task.date)
+        });
     }
 }
 

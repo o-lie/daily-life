@@ -29,3 +29,8 @@ a {
 	text-decoration: none;
 	color: $text-primary;
 }
+
+::selection {
+	background-color: $secondary;
+	color: white;
+}
