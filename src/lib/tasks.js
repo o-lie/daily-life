@@ -8,10 +8,12 @@ export const getTasks = async () => {
 	try {
 		const data = await getDocs(tasksCollectionRef);
 
+        console.log(data);
         return data.docs.map(doc => {
             return (getTaskMeta(doc));
         })
 	} catch (e) {
+        console.log(e);
 		return e;
 	}
 }
