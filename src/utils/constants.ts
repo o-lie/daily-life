@@ -1,6 +1,8 @@
 import { createTheme } from "@mui/material";
 import dayjs, { Dayjs } from "dayjs";
 import { Timestamp } from "@firebase/firestore";
+import TasksIcon from "public/images/tasks.svg";
+import DashboardIcon from "public/images/dashboard.svg";
 
 export const projectTheme = createTheme({
 	typography: {
@@ -12,7 +14,7 @@ export const projectTheme = createTheme({
 			contrastText: "white"
 		},
 		secondary: {
-			main: "#487DF5",
+			main: "#48D4F5",
 			contrastText: "white"
 		},
 		error: {
@@ -43,6 +45,19 @@ export const modalContentStyle = {
 	flexDirection: "column",
 	gap: "1rem"
 }
+
+export const sidebarItems = [
+	{
+		icon: DashboardIcon,
+		title: "Home",
+		link: "/"
+	},
+	{
+		icon: TasksIcon,
+		title: "Zadania",
+		link: "/tasks"
+	},
+];
 
 export const convertDateToString = (dateAsDate: Date) => {
 	return JSON.parse(JSON.stringify(dateAsDate));

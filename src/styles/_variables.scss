@@ -33,3 +33,12 @@ $mauve: rgba(255, 198, 255, 0.2);
 $baby-powder: rgba(255, 255, 252, 0.2);
 
 $border-radius: 8px;
+
+$breakpoints: (
+	"xs": 576,
+	"sm": 768,
+	"md": 992,
+	"lg": 1200,
+	"xl": 1400,
+	"xxl": 1930,
+);

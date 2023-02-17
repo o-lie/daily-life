@@ -1,5 +1,7 @@
 import { Dayjs } from "dayjs";
 
+export type SVG = React.FunctionComponent<React.SVGProps<SVGSVGElement>>
+
 export type EnumDictionary<T extends string | symbol | number, U> = {
 	[K in T]: U;
 };
@@ -40,4 +42,10 @@ export type StatusItem = {
 	isOpen: boolean,
 	iconSrc: string,
 	color: StatusColor
+}
+
+export type SidebarItem = {
+	icon: SVG,
+	title: string,
+	link: string
 }
