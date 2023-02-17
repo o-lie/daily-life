@@ -9,7 +9,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
 	const router = useRouter();
 	const [ isLoading, setIsLoading ] = useState(false);
-	const [ isMobile, toggleIsMobile ] = useState<boolean>(window.innerWidth < 992);
+	const [ isMobile, toggleIsMobile ] = useState<boolean>(false);
 
 	useEffect(() => {
 		router.events.on("routeChangeStart", () => {
@@ -24,14 +24,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 			setIsLoading(false);
 		});
 
-		window.addEventListener("resize", () => {
+		const setWindowWidth = () => {
 			if (window.innerWidth < 992) {
 				toggleIsMobile(true);
 			} else {
 				toggleIsMobile(false);
 			}
-		});
+		};
 
+		window.addEventListener("resize", setWindowWidth);
+
+		setWindowWidth();
+
+		return () => window.removeEventListener("resize", setWindowWidth);
 	}, []);
 
 	return (
