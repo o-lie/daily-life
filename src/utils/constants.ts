@@ -4,7 +4,7 @@ import { Timestamp } from "@firebase/firestore";
 
 export const projectTheme = createTheme({
 	typography: {
-		fontFamily: "Poppins",
+		fontFamily: "Nunito",
 	},
 	palette: {
 		primary: {

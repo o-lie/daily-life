@@ -28,10 +28,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 				<Sidebar/>
 					<div className={ styles.layout__inner }>
 						{
-							// isLoading
-							// 	?
-							// 	<LinearProgress/>
-							// 	:
+							isLoading
+								?
+								<LinearProgress/>
+								:
 								children
 						}
 					</div>
