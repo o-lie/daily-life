@@ -1,19 +1,33 @@
 import styles from "@/styles/components/header.module.scss";
+import { Button, Stack } from "@mui/material";
+import MyBreadcrumbs from "@/components/MyBreadcrumbs";
 
 type Props = {
 	title: string,
+	buttonPrimary?: {
+		title: string,
+		handleClick: () => void
+	}
 }
 
 function HeaderComponent(props: Props) {
 
 	const {
 		title,
+		buttonPrimary
 	} = props;
 
 	return (
 		<div className={ styles.header }>
 			<div className={ styles.header__top }>
-				<h1 className={ styles.header__title }>{ title }</h1>
+				<Stack>
+					<h1 className={ styles.header__title }>{ title }</h1>
+					{/*<MyBreadcrumbs/>*/}
+				</Stack>
+				{
+					buttonPrimary &&
+                    <Button onClick={ buttonPrimary.handleClick }>{ buttonPrimary.title }</Button>
+				}
 			</div>
 		</div>
 	);

@@ -32,15 +32,14 @@ export enum Status {
 }
 
 export enum StatusColor {
-	TODO = "grey",
-	DONE = "green"
+	TODO = "#48D4F5",
+	DONE = "#48F568"
 }
 
 export type StatusItem = {
 	name: string,
 	isDone: boolean,
 	isOpen: boolean,
-	iconSrc: string,
 	color: StatusColor
 }
 

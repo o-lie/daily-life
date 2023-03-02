@@ -12,9 +12,10 @@ html, body {
 }
 
 #__next {
-	width: 100%;
-	height: 100%;
+	width: 100vw;
+	height: 100vh;
 }
+
 h1 {
 	font-size: 2rem;
 	margin: 0;
@@ -34,6 +35,19 @@ svg {
 }
 
 ::selection {
-	background-color: $secondary;
+	background-color: $tertiary;
 	color: white;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+.calendar {
+	margin-bottom: 2.5rem;
+}
+
+.now-indicator {
+	color: $secondary;
+	background-color: $secondary;
 }

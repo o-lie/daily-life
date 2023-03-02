@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { deleteTask, updateTask } from "@/lib/tasks";
-import { getServerSideProps } from "@/pages/tasks";
 
 type Data = {
 	message: string

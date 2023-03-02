@@ -7,9 +7,10 @@ import SidebarMobile from "@/components/SidebarMobile";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
 
-	const router = useRouter();
 	const [ isLoading, setIsLoading ] = useState(false);
 	const [ isMobile, toggleIsMobile ] = useState<boolean>(false);
+
+	const router = useRouter();
 
 	useEffect(() => {
 		router.events.on("routeChangeStart", () => {
