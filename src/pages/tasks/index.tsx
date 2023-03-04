@@ -46,6 +46,11 @@ export default function TodosList(props: Props) {
 
 	const [ openedTab, setOpenedTab ] = useState(0);
 	const [ isModalOpen, toggleModalOpen ] = useState(false);
+	const [ snackbarState, setSnackbarState ] = useState({
+		isOpen: false,
+		message: "",
+		status: 100
+	});
 
 	const [ newTask, setNewTask ] = useState<Task>(initialState);
 
