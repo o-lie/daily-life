@@ -7,9 +7,10 @@ export type EnumDictionary<T extends string | symbol | number, U> = {
 };
 
 export type Task = {
-	id?: string,
+	id: string,
 	title: string,
 	done: boolean,
+	allDay: boolean,
 	date?: string | Dayjs | null
 }
 

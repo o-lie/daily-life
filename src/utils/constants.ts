@@ -3,8 +3,7 @@ import dayjs, { Dayjs } from "dayjs";
 import { Timestamp } from "@firebase/firestore";
 import TasksIcon from "public/images/tasks.svg";
 import DashboardIcon from "public/images/dashboard.svg";
-import CalendarIcon from "public/images/calendar.svg";
-import 'dayjs/locale/pl';
+import "dayjs/locale/pl";
 import { plPL } from "@mui/x-date-pickers";
 
 export const projectTheme = createTheme({
@@ -61,11 +60,6 @@ export const sidebarItems = [
 		icon: TasksIcon,
 		title: "Zadania",
 		link: "/tasks"
-	},
-	{
-		icon: CalendarIcon,
-		title: "Kalendarz",
-		link: "/calendar"
 	}
 ];
 
@@ -74,7 +68,11 @@ export const convertDateToString = (dateAsDate: Date) => {
 };
 
 export const convertStringToDate = (date: string) => {
-	return dayjs(date).format("D/MM/YYYY");
+	return dayjs(date).format("D.MM.YYYY");
+};
+
+export const convertStringToDateTime = (date: string) => {
+	return dayjs(date).format("HH:mm D.MM.YYYY");
 };
 
 export const convertDayjsToString = (date: Dayjs | string | null) => {

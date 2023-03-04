@@ -1,6 +1,5 @@
 import styles from "@/styles/components/header.module.scss";
 import { Button, Stack } from "@mui/material";
-import MyBreadcrumbs from "@/components/MyBreadcrumbs";
 
 type Props = {
 	title: string,
@@ -22,11 +21,11 @@ function HeaderComponent(props: Props) {
 			<div className={ styles.header__top }>
 				<Stack>
 					<h1 className={ styles.header__title }>{ title }</h1>
-					{/*<MyBreadcrumbs/>*/}
+					{/*<MyBreadcrumbs/>*/ }
 				</Stack>
 				{
 					buttonPrimary &&
-                    <Button onClick={ buttonPrimary.handleClick }>{ buttonPrimary.title }</Button>
+                    <Button variant={ "contained" } onClick={ buttonPrimary.handleClick }>{ buttonPrimary.title }</Button>
 				}
 			</div>
 		</div>

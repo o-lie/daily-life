@@ -10,8 +10,10 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 	const method = req.method;
 	console.log(req);
 	if(method === "GET") {
-		return getTasks().then(() => res.status(200).send({
+
+		getTasks().then(() => res.status(200).send({
 			message: `Tasks was sucessfully fetched.`,
+			data: getTasks()
 		}));
 	}
 	if (method === "POST") {

@@ -1,4 +1,4 @@
-import { collection, getDocs, deleteDoc, doc, addDoc, setDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDocs, setDoc } from "firebase/firestore";
 import { db } from "firebaseConfig";
 import { convertDateToString, convertStringToTimestamp } from "@/utils/constants";
 
@@ -20,12 +20,12 @@ export const getTasks = async () => {
 
 export const addTask = async (task) => {
     if(task.date == null) {
-        const docRef = await addDoc(tasksCollectionRef, {title: task.title, done: task.done})
-        console.log(`task with id ${docRef.id} was created`)
+        await addDoc(tasksCollectionRef, {title: task.title, done: task.done, allDay: task.allDay});
+        console.log(`Task was successfully created.`)
     }
     else {
-        const docRef = await addDoc(tasksCollectionRef, {title: task.title, done: task.done, date: convertStringToTimestamp(task.date)})
-        console.log(`task with id ${docRef.id} was created`)
+        await addDoc(tasksCollectionRef, {title: task.title, done: task.done, allDay: task.allDay, date: convertStringToTimestamp(task.date)});
+        console.log(`Task was successfully created.`)
     }
 }
 
@@ -35,13 +35,15 @@ export const updateTask = async (task) => {
     if(task.date == null) {
         await setDoc(docRef, {
             title: task.title,
-            done: task.done
+            done: task.done,
+            allDay: task.allDay
         });
     }
     else {
         await setDoc(docRef, {
             title: task.title,
             done: task.done,
+            allDay: task.allDay,
             date: convertStringToTimestamp(task.date)
         });
     }
@@ -59,6 +61,7 @@ const getTaskMeta = (task) => {
             id: task.id,
             title: task.data().title,
             done: task.data().done,
+            allDay: task.data().allDay,
             date: convertDateToString(task.data().date.toDate())
         }
     }
@@ -66,7 +69,8 @@ const getTaskMeta = (task) => {
         return {
             id: task.id,
             title: task.data().title,
-            done: task.data().done
+            done: task.data().done,
+            allDay: task.data().allDay
         }
     }
 }

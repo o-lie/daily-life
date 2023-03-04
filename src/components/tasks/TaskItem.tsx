@@ -1,13 +1,13 @@
 import styles from "@/styles/components/tasks/TaskItem.module.scss";
 import { Task } from "@/types/types";
-import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, IconButton, ListItem, ListItemText, Snackbar, Stack, Switch, TextField, Tooltip } from "@mui/material";
+import { Button, Checkbox, FormControl, FormControlLabel, IconButton, ListItem, ListItemText, Snackbar, Stack, TextField, Tooltip } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { convertDayjsToString, convertStringToDate } from "@/utils/constants";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import MyModal from "@/components/MyModal";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { DatePicker, DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Dayjs } from "dayjs";
 import { useRouter } from "next/router";
@@ -89,32 +89,63 @@ const TaskItem = (props: Props) => {
 					/>
 				</FormControl>
 				<FormControlLabel
-					control={ <Switch
-						checked={ taskState.done }
-						onChange={ e => setTaskState(prevState => {
-							return {
-								...prevState,
-								done: e.target.checked
-							};
-						}) }
-					/> }
-					label="Done"
+					control={
+						<Checkbox
+							checked={ taskState.allDay }
+							onChange={ e => setTaskState(prevState => {
+								return {
+									...prevState,
+									allDay: e.target.checked
+								};
+							}) }
+						/>
+					}
+					label={ "Całodniowe" }
 				/>
 				<FormControl fullWidth>
 					<LocalizationProvider dateAdapter={ AdapterDayjs }>
-						<DatePicker
-							onChange={ newDate => setTaskState(prevState => {
-								return {
-									...prevState,
-									date: convertDayjsToString(newDate as Dayjs)
-								};
-							}) }
-							renderInput={ (params) => <TextField { ...params }/> }
-							value={ taskState.date }
-							label={ "Data" }
-						/>
+						{
+							taskState.allDay
+								?
+								<DatePicker
+									onChange={ newDate => setTaskState(prevState => {
+										return {
+											...prevState,
+											date: convertDayjsToString(newDate as Dayjs)
+										};
+									}) }
+									renderInput={ (params) => <TextField { ...params }/> }
+									value={ taskState.date }
+									label={ "Data" }
+								/>
+								:
+								<DateTimePicker
+									label="Data"
+									value={ taskState.date }
+									onChange={ newDate => setTaskState(prevState => {
+										return {
+											...prevState,
+											date: convertDayjsToString(newDate as Dayjs)
+										};
+									}) }
+									renderInput={ (params) => <TextField { ...params } /> }
+								/>
+						}
 					</LocalizationProvider>
 				</FormControl>
+				<FormControlLabel
+					control={
+						<Checkbox
+							checked={ taskState.done }
+							onChange={ e => setTaskState(prevState => {
+								return {
+									...prevState,
+									done: e.target.checked
+								};
+							}) }
+						/> }
+					label="Zrobione"
+				/>
 				<Stack spacing={ 2 } direction="row">
 					<Button
 						type="submit"
@@ -169,19 +200,19 @@ const TaskItem = (props: Props) => {
 
 				}
 			>
-				{/*<FormControl>*/}
-				{/*	<Tooltip title="Oznacz jako wykonane">*/}
-				{/*		<Checkbox*/}
-				{/*			checked={ taskState.done }*/}
-				{/*			onChange={ (e) => setTaskState(prevState => {*/}
-				{/*				return {*/}
-				{/*					...prevState,*/}
-				{/*					done: e.target.checked*/}
-				{/*				};*/}
-				{/*			})}*/}
-				{/*		/>*/}
-				{/*	</Tooltip>*/}
-				{/*</FormControl>*/}
+				{/*<FormControl>*/ }
+				{/*	<Tooltip title="Oznacz jako wykonane">*/ }
+				{/*		<Checkbox*/ }
+				{/*			checked={ taskState.done }*/ }
+				{/*			onChange={ (e) => setTaskState(prevState => {*/ }
+				{/*				return {*/ }
+				{/*					...prevState,*/ }
+				{/*					done: e.target.checked*/ }
+				{/*				};*/ }
+				{/*			})}*/ }
+				{/*		/>*/ }
+				{/*	</Tooltip>*/ }
+				{/*</FormControl>*/ }
 				<ListItemText
 					primary={ task?.title }
 					secondary={ task.date ? convertStringToDate(task.date as string) : "Brak daty" }
